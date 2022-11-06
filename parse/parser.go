@@ -1,5 +1,10 @@
 package parse
 
+/**
+ * @title parser
+ * @author CH00SE1
+ * @date 2022-10-24 16:59:18
+ */
 import (
 	"errors"
 	"fmt"
@@ -8,11 +13,6 @@ import (
 	"net/url"
 )
 
-/**
- * @title parser
- * @author CH00SE1
- * @date 2022-10-24 16:59:18
- */
 type Result struct {
 	URL  *url.URL
 	M3u8 *M3u8
@@ -29,7 +29,7 @@ func FromURL(link string) (*Result, error) {
 	if err != nil {
 		return nil, fmt.Errorf("request m3u8 URL failed: %s", err.Error())
 	}
-	//noinspection GoUnhandledErrorResult
+	// noinspection GoUnhandledErrorResult
 	defer body.Close()
 	m3u8, err := parse(body)
 	if err != nil {

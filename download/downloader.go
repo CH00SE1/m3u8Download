@@ -1,5 +1,10 @@
 package download
 
+/**
+ * @title downloader
+ * @author CH00SE1
+ * @date 2022-10-24 16:57:56
+ */
 import (
 	"bufio"
 	"fmt"
@@ -13,11 +18,6 @@ import (
 	"sync/atomic"
 )
 
-/**
- * @title downloader
- * @author CH00SE1
- * @date 2022-10-24 16:57:56
- */
 const (
 	tsExt            = ".ts"
 	tsFolderName     = "ts"
@@ -205,7 +205,6 @@ func (d *Downloader) merge() error {
 	if missingCount > 0 {
 		fmt.Printf("[warning] %d files missing\n", missingCount)
 	}
-
 	// Create a TS file for merging, all segment files will be written to this file.
 	mFilePath := filepath.Join(d.folder, d.fileName+mergeTSFilename)
 	mFile, err := os.Create(mFilePath)
@@ -214,7 +213,6 @@ func (d *Downloader) merge() error {
 	}
 	//noinspection GoUnhandledErrorResult
 	defer mFile.Close()
-
 	writer := bufio.NewWriter(mFile)
 	mergedCount := 0
 	for segIndex := 0; segIndex < d.segLen; segIndex++ {
@@ -231,13 +229,10 @@ func (d *Downloader) merge() error {
 	_ = writer.Flush()
 	// Remove `ts` folder
 	_ = os.RemoveAll(d.tsFolder)
-
 	if mergedCount != d.segLen {
 		fmt.Printf("[warning] \n%d files merge failed", d.segLen-mergedCount)
 	}
-
 	fmt.Printf("\n[output] %s\n", mFilePath)
-
 	return nil
 }
 

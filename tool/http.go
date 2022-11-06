@@ -1,5 +1,10 @@
 package tool
 
+/**
+ * @title http
+ * @author CH00SE1
+ * @date 2022-10-24 17:01:20
+ */
 import (
 	"fmt"
 	"io"
@@ -7,11 +12,6 @@ import (
 	"time"
 )
 
-/**
- * @title http
- * @author CH00SE1
- * @date 2022-10-24 17:01:20
- */
 func Get(url string) (io.ReadCloser, error) {
 	c := http.Client{
 		Timeout: time.Duration(60) * time.Second,

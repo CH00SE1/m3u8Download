@@ -1,16 +1,16 @@
 package tool
 
+/**
+ * @title crypt
+ * @author CH00SE1
+ * @date 2022-10-24 17:00:20
+ */
 import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
 )
 
-/**
- * @title crypt
- * @author CH00SE1
- * @date 2022-10-24 17:00:20
- */
 func AES128Encrypt(origData, key, iv []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {

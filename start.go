@@ -1,5 +1,10 @@
 package m3u8Download
 
+/**
+ * @title start
+ * @author CH00SE1
+ * @date 2022-10-24 17:04:30
+ */
 import (
 	"flag"
 	"fmt"
@@ -8,11 +13,6 @@ import (
 	"os"
 )
 
-/**
- * @title start
- * @author CH00SE1
- * @date 2022-10-24 17:04:30
- */
 type VideoInfo struct {
 	FileName string `json:"fileName"`
 	Url      string `json:"url"`
@@ -20,7 +20,7 @@ type VideoInfo struct {
 	ChanSize int    `json:"chanSize"`
 }
 
-func DownloadM3u8(vl *VideoInfo) {
+func (vl VideoInfo) DownloadM3u8() {
 	flag.Parse()
 	defer func() {
 		r := recover()
@@ -28,16 +28,16 @@ func DownloadM3u8(vl *VideoInfo) {
 		os.Exit(-1)
 	}()
 	if vl.Url == "" {
-		panicParameter("url is nil")
+		log.Panic("url is nil")
 	}
 	if vl.Output == "" {
-		panicParameter("output is nil")
+		log.Panic("output is nil")
 	}
 	if vl.ChanSize <= 0 {
-		log.Panic(`parameter 'c' must be greater than 0`)
+		log.Panic("chansize is nil")
 	}
 	if vl.FileName == "" {
-		panicParameter("filename is nil")
+		log.Panic("filename is nil")
 	}
 	downloader, err := download.NewTask(vl.Output, vl.Url, vl.FileName)
 	if err != nil {

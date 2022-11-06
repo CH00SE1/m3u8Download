@@ -1,5 +1,10 @@
 package parse
 
+/**
+ * @title m3u8
+ * @author CH00SE1
+ * @date 2022-10-24 16:58:44
+ */
 import (
 	"bufio"
 	"errors"
@@ -10,11 +15,6 @@ import (
 	"strings"
 )
 
-/**
- * @title m3u8
- * @author CH00SE1
- * @date 2022-10-24 16:58:44
- */
 type (
 	PlaylistType string
 	CryptMethod  string
@@ -51,7 +51,7 @@ type Segment struct {
 	Offset   uint64  // #EXT-X-BYTERANGE: length[@offset]
 }
 
-// #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=240000,RESOLUTION=416x234,CODECS="avc1.42e00a,mp4a.40.2"
+// MasterPlaylist #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=240000,RESOLUTION=416x234,CODECS="avc1.42e00a,mp4a.40.2"
 type MasterPlaylist struct {
 	URI        string
 	BandWidth  uint32
@@ -60,7 +60,7 @@ type MasterPlaylist struct {
 	ProgramID  uint32
 }
 
-// #EXT-X-KEY:METHOD=AES-128,URI="key.key"
+// Key #EXT-X-KEY:METHOD=AES-128,URI="key.key"
 type Key struct {
 	// 'AES-128' or 'NONE'
 	// If the encryption method is NONE, the URI and the IV attributes MUST NOT be present
@@ -82,11 +82,10 @@ func parse(reader io.Reader) (*M3u8, error) {
 			Keys: make(map[int]*Key),
 		}
 		keyIndex = 0
-
-		key     *Key
-		seg     *Segment
-		extInf  bool
-		extByte bool
+		key      *Key
+		seg      *Segment
+		extInf   bool
+		extByte  bool
 	)
 	for ; i < count; i++ {
 		line := strings.TrimSpace(lines[i])
